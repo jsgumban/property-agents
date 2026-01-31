@@ -10,6 +10,14 @@ router.get('/', (req, res) => {
   res.json({ data: agents });
 });
 
+// Get paginated agents
+router.get('/paginated', (req, res) => {
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = parseInt(req.query.limit as string) || 10;
+  const result = agentStore.getPaginated(page, limit);
+  res.json(result);
+});
+
 // Get single agent
 router.get('/:id', (req, res) => {
   const agent = agentStore.getById(req.params.id);

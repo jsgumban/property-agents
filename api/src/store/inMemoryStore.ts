@@ -8,6 +8,17 @@ class AgentStore {
     return Array.from(this.agents.values());
   }
 
+  getPaginated(page = 1, limit = 10) {
+    const all = Array.from(this.agents.values());
+    const start = (page - 1) * limit;
+    return {
+      data: all.slice(start, start + limit),
+      total: all.length,
+      page,
+      limit
+    };
+  }
+
   getById(id: string) {
     return this.agents.get(id);
   }

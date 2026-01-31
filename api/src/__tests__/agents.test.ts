@@ -21,6 +21,13 @@ describe('Agents API', () => {
     expect(res.body.data.length).toBeGreaterThan(0);
   });
 
+  it('GET /api/agents/paginated', async () => {
+    const res = await request(app).get('/api/agents/paginated?page=1&limit=10');
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('total');
+    expect(res.body).toHaveProperty('page');
+  });
+
   it('GET /api/agents/:id', async () => {
     const res = await request(app).get(`/api/agents/${id}`);
     expect(res.status).toBe(200);
