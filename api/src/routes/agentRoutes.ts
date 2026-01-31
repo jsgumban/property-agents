@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { agentStore } from '../store/inMemoryStore';
+import { validateAgent } from '../middleware/validation';
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.get('/:id', (req, res) => {
 });
 
 // Create agent
-router.post('/', (req, res) => {
+router.post('/', validateAgent, (req, res) => {
   const { firstName, lastName, email, mobileNumber } = req.body;
 
   const existing = agentStore.getByEmail(email);

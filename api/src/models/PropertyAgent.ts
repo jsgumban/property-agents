@@ -8,16 +8,6 @@ export interface PropertyAgent {
   updatedAt: Date;
 }
 
-export interface CreateAgentDto {
-  firstName: string;
-  lastName: string;
-  email: string;
-  mobileNumber: string;
-}
+export type CreateAgentDto = Pick<PropertyAgent, 'firstName' | 'lastName' | 'email' | 'mobileNumber'>;
 
-export interface UpdateAgentDto {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  mobileNumber?: string;
-}
+export type UpdateAgentDto = Partial<CreateAgentDto>;

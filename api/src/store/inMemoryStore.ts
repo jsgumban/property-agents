@@ -8,19 +8,19 @@ class AgentStore {
     return Array.from(this.agents.values());
   }
 
-  getById(id: string): PropertyAgent | undefined {
+  getById(id: string) {
     return this.agents.get(id);
   }
 
-  getByEmail(email: string): PropertyAgent | undefined {
+  getByEmail(email: string) {
     return Array.from(this.agents.values()).find(a => a.email === email);
   }
 
-  create(dto: CreateAgentDto): PropertyAgent {
+  create(data: CreateAgentDto) {
     const now = new Date();
     const agent: PropertyAgent = {
       id: uuidv4(),
-      ...dto,
+      ...data,
       createdAt: now,
       updatedAt: now
     };
@@ -28,20 +28,17 @@ class AgentStore {
     return agent;
   }
 
-  update(id: string, dto: UpdateAgentDto): PropertyAgent | null {
-    const existing = this.agents.get(id);
-    if (!existing) return null;
+  update(id: string, data: UpdateAgentDto) {
+    const agent = this.agents.get(id);
+    if (!agent) return null;
 
-    const updated: PropertyAgent = {
-      ...existing,
-      ...dto,
-      updatedAt: new Date()
-    };
+    const now = new Date();
+    const updated = { ...agent, ...data, updatedAt: now };
     this.agents.set(id, updated);
     return updated;
   }
 
-  delete(id: string): boolean {
+  delete(id: string) {
     return this.agents.delete(id);
   }
 }
