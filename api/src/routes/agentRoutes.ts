@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { agentStore } from '../store/inMemoryStore';
-import { validateAgent } from '../middleware/validation';
+import { validateAgent, validateAgentUpdate } from '../middleware/validation';
 
 const router = Router();
 
@@ -41,7 +41,7 @@ router.post('/', validateAgent, (req, res) => {
 });
 
 // Update agent
-router.put('/:id', (req, res) => {
+router.put('/:id', validateAgentUpdate, (req, res) => {
   const { firstName, lastName, email, mobileNumber } = req.body;
 
   if (email) {

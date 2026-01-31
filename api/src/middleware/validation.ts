@@ -9,3 +9,13 @@ export function validateAgent(req: Request, res: Response, next: NextFunction) {
 
   next();
 }
+
+export function validateAgentUpdate(req: Request, res: Response, next: NextFunction) {
+  const { firstName, lastName, email, mobileNumber } = req.body;
+
+  if (!firstName && !lastName && !email && !mobileNumber) {
+    return res.status(400).json({ error: 'At least one field is required' });
+  }
+
+  next();
+}

@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+  import { reactive, watch } from 'vue'
+  import type { Agent } from '../types/Agent'
 
-const props = defineProps<{ agent?: any }>()
-const emit = defineEmits(['submit', 'cancel'])
+  const props = defineProps<{ agent?: Agent | null }>()
+  const emit = defineEmits(['submit', 'cancel'])
 
-const defaultForm = { id: '', firstName: '', lastName: '', email: '', mobileNumber: '' }
-const form = reactive({ ...defaultForm })
+  const defaultForm: Agent = { id: '', firstName: '', lastName: '', email: '', mobileNumber: '' }
+  const form = reactive<Agent>({ ...defaultForm })
 
-watch(() => props.agent, (val) => {
-  Object.assign(form, val || defaultForm)
-}, { immediate: true })
+  watch(() => props.agent, (val) => {
+    Object.assign(form, val || defaultForm)
+  }, { immediate: true })
 </script>
 
 <template>
