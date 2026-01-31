@@ -1,0 +1,79 @@
+{
+  "info": {
+    "name": "Property Agents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "List all agents",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/api/agents"
+      }
+    },
+    {
+      "name": "List agents (paginated)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/agents/paginated?page=1&limit=10",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "agents", "paginated"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get agent by ID",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/api/agents/{{agentId}}"
+      }
+    },
+    {
+      "name": "Create agent",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3000/api/agents",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"mobileNumber\": \"1234567890\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Update agent",
+      "request": {
+        "method": "PUT",
+        "url": "http://localhost:3000/api/agents/{{agentId}}",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Jane\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Delete agent",
+      "request": {
+        "method": "DELETE",
+        "url": "http://localhost:3000/api/agents/{{agentId}}"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "agentId",
+      "value": "your-agent-id-here"
+    }
+  ]
+}
