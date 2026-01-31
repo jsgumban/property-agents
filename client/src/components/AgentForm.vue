@@ -1,22 +1,19 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 
-const emit = defineEmits(['submit'])
+const props = defineProps<{ agent?: any }>()
+const emit = defineEmits(['submit', 'cancel'])
 
-const form = reactive({
-  firstName: '',
-  lastName: '',
-  email: '',
-  mobileNumber: ''
-})
+const defaultForm = { id: '', firstName: '', lastName: '', email: '', mobileNumber: '' }
+const form = reactive({ ...defaultForm })
 
-const onSubmit = () => {
-  emit('submit', { ...form })
-}
+watch(() => props.agent, (val) => {
+  Object.assign(form, val || defaultForm)
+}, { immediate: true })
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit" class="space-y-4 max-w-md">
+  <form @submit.prevent="emit('submit', { ...form })" class="space-y-4 max-w-md">
     <div>
       <label class="block text-sm font-medium">First Name</label>
       <input v-model="form.firstName" type="text" required class="mt-1 block w-full border rounded px-3 py-2" />
@@ -37,6 +34,13 @@ const onSubmit = () => {
       <input v-model="form.mobileNumber" type="text" required class="mt-1 block w-full border rounded px-3 py-2" />
     </div>
 
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+    <div class="flex gap-2">
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+        {{ form.id ? 'Update' : 'Create' }}
+      </button>
+      <button v-if="form.id" type="button" @click="emit('cancel')" class="bg-gray-300 px-4 py-2 rounded">
+        Cancel
+      </button>
+    </div>
   </form>
 </template>
